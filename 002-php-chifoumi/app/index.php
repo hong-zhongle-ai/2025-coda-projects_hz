@@ -8,17 +8,17 @@ if ($player == null) {
     $computer_index = array_rand($choices);
     $computer = $choices[$computer_index];
     if ($computer === $player) {
-        $result = "<p><strong>draw</strong></p>";
+        $result = "<p style=color:yellow><strong>draw</strong></p>";
         $result_class = "draw";
     } elseif (
         ($player === 'rock' && $computer === 'scissor') ||
         ($player === 'paper' && $computer === 'rock') ||
         ($player === 'scissor' && $computer === 'paper')
     ) {
-        $result = "<p><strong>win</strong></p>";
+        $result = "<p style=color:green><strong>win</strong></p>";
         $result_class = "win";
     } else {
-        $result = "<p><strong>lose</strong>";
+        $result = "<p style=color:Red><strong>lose</strong>";
         $result_class = "lose";
     }
 
