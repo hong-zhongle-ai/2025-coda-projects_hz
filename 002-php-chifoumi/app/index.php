@@ -34,8 +34,9 @@ $html = <<<HTML
     <title>Chifumi</title>
 </head>
 <style>
-    body { font-family: sans-serif; text-align: center; }
-    h1 { color: red; }
+    
+    body { font-family: sans-serif; text-align: center;background-color: gray }
+    h1 { color: black; }
     button { padding: 10px 20px; margin: 5px; }
     a { text-decoration: none; color: black; }
 </style>
@@ -46,17 +47,13 @@ $html = <<<HTML
     <button type="button"><a href="?player=rock">rock</a></button>
     <button type="button"><a href="?player=paper">paper</a></button>
     <button type="button"><a href="?player=scissor">scissor</a></button>
-    
-    <hr>
-    
+  
     <h2>Statut de la partie</h2>
     
     $message
     
    <button type="button"><a href="./">retry</a></button>
-    
-    
-    
+      
 </body>
 </html>
 HTML;
