@@ -9,28 +9,67 @@ $useSym   = true;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $length = (int)$_POST['size'];
+    $length = (int)$_POST['size'] ?? 0;
 
-    $useLower = isset($_POST['use-alpha-min']);
-    $useUpper = isset($_POST['use-alpha-maj']);
-    $useNum   = isset($_POST['use-num']);
-    $useSym   = isset($_POST['use-symbols']);
+    $useLower = $_POST['use-alpha-min'] ?? 0;
+    $useUpper = $_POST['use-alpha-maj'] ?? 0;
+    $useNum   = $_POST['use-num'] ?? 0;
+    $useSym   = $_POST['use-symbols'] ?? 0;
 
     $chars = "";
-    if ($useLower) ($chars .= "abcdefghijklmnopqrstuvwxyz");
-    if ($useUpper) $chars .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if ($useNum)   $chars .= "0123456789";
-    if ($useSym)   $chars .= "!@#$%^&*()-_=+";
+    $lowerSet = "abcdefghijklmnopqrstuvwxyz";
+    $upperSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $numSet   = "0123456789";
+    $symSet   = "!@#$%^&*()-_=+";
+
+    $chars = "";
+    $tempPassword = "";
+
+    if ($useLower) {
+        $chars .= $lowerSet;
+        $tempPassword .= $lowerSet[random_int(0, strlen($lowerSet) - 1)];
+    }
+    if ($useUpper) {
+        $chars .= $upperSet;
+        $tempPassword .= $upperSet[random_int(0, strlen($upperSet) - 1)];
+    }
+    if ($useNum) {
+        $chars .= $numSet;
+        $tempPassword .= $numSet[random_int(0, strlen($numSet) - 1)];
+    }
+    if ($useSym) {
+        $chars .= $symSet;
+        $tempPassword .= $symSet[random_int(0, strlen($symSet) - 1)];
+    }
 
     if ($chars === "") {
-        $password = "Please select at least one option!";
+        $password = "Error: Please select at least one option!";
     } else {
-        $maxIndex = strlen($chars) - 1;
-        for ($i = 0; $i < $length; $i++) {
-            $password .= $chars[random_int(0, $maxIndex)];
+        $remainingLength = $length - strlen($tempPassword);
+
+        if ($remainingLength > 0) {
+            $maxIndex = strlen($chars) - 1;
+            for ($i = 0; $i < $remainingLength; $i++) {
+                $tempPassword .= $chars[random_int(0, $maxIndex)];
+            }
         }
+
+        $passArray = str_split($tempPassword);
+
+        for ($i = count($passArray) - 1; $i > 0; $i--) {
+            $j = random_int(0, $i);
+            // Swap elements
+            $temp = $passArray[$i];
+            $passArray[$i] = $passArray[$j];
+            $passArray[$j] = $temp;
+        }
+
+        $password = implode('', $passArray);
+
+        $password = substr($password, 0, $length);
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
