@@ -65,8 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $password = implode('', $passArray);
-
-        $password = substr($password, 0, $length);
     }
 }
 
