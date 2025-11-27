@@ -6,6 +6,8 @@ $useLower = true;
 $useUpper = true;
 $useNum   = true;
 $useSym   = true;
+$passwordtest  = true;
+$passwordpoint = 0;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -15,14 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $useUpper = $_POST['use-alpha-maj'] ?? 0;
     $useNum   = $_POST['use-num'] ?? 0;
     $useSym   = $_POST['use-symbols'] ?? 0;
+    $passwordtest = $_POST['howstrongisyourpassword'] ?? 0;
 
     $chars = "";
     $lowerSet = "abcdefghijklmnopqrstuvwxyz";
     $upperSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $numSet   = "0123456789";
     $symSet   = "!@#$%^&*()-_=+";
-
-    $chars = "";
+    $passwordpoint =0;
     $tempPassword = "";
 
     if ($useLower) {
@@ -40,6 +42,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($useSym) {
         $chars .= $symSet;
         $tempPassword .= $symSet[random_int(0, strlen($symSet) - 1)];
+    }
+
+
+    if ($useLower) {
+        $passwordpoint += 20;
+        }
+    if ($useUpper) {
+        $passwordpoint += 20;
+    }
+    if ($useNum) {
+        $passwordpoint += 20;
+    }
+    if ($useSym) {
+        $passwordpoint += 20;
+    }
+    if ($length >= 8 ) {
+        $passwordpoint += 20;
     }
 
     if ($chars === "") {
@@ -87,6 +106,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 <?php endif; ?>
 <form method="POST" action="index.php">
+    verificateur
+       <label for="mdp">entrer code</label>
+        <input type="text" id="mdp" name="howstrongisyourpassword"  placeholder="verifier mon code"
+                <?= $passwordtest ? 'checked' : '' ?>>
+    <?php echo $passwordpoint."/100";?>
     <div class="mb-3">
         <label for="size" class="form-label">Taille</label>
         <select class="form-select" name="size" id="size">
