@@ -34,6 +34,7 @@ if ("1" === $doInstall) {
             </thead>
             <tbody>
                 {$resultsHtml}
+                <P>bruh</P>
             </tbody>
         </table>
     </div>
