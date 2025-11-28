@@ -15,6 +15,11 @@ function formatNumber($aMonthly_listeners) {
     }
     return (string)$aMonthly_listeners;
 }
+function formatDuration(int $seconds): string {
+    $minutes = floor($seconds / 60);
+    $seconds = $seconds % 60;
+    return sprintf('%02d:%02d', $minutes, $seconds);
+}
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: index.php");
@@ -89,7 +94,7 @@ HTML;
 
 $songsHtml = "";
 try {
-    $sqlSongs = "SELECT s.id, s.name, s.note, a.cover
+    $sqlSongs = "SELECT s.id, s.name, s.note, a.cover, s.duration
                  FROM song s
                  JOIN album a ON s.album_id = a.id
                  WHERE s.artist_id = $artistId
@@ -104,9 +109,9 @@ try {
         foreach($songsResults as $song) {
             $sName = htmlspecialchars($song['name']);
             $sNote = htmlspecialchars($song['note']);
-
-
+            $sDuration = htmlspecialchars($song['duration']);
             $sCover = htmlspecialchars($song['cover']);
+            $formatDuration = formatDuration($song['duration']);
 
             $badgeColor = ($sNote >= 15) ? 'text-bg-success' : 'text-bg-primary';
 
@@ -115,7 +120,11 @@ try {
                 <div class="d-flex align-items-center">
                     <span class="text-secondary me-3">#$rank</span>
                     <img alt="" src="$sCover" style="width: 50px; height: 50px; object-fit: cover; margin-right: 1rem; border-radius: 50%;">
+                    <div>
+                    <strong style="margin-right:15px">$formatDuration</strong>
+                    </div>
                     <strong>$sName</strong>
+                    
                 </div>
                 <span class="badge $badgeColor rounded-pill">$sNote / 5</span>
             </div>
