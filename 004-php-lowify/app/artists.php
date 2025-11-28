@@ -85,11 +85,6 @@ $html = <<<HTML
 </div>
 HTML;
 
-// -- on génère et on affiche la page
-// je vous conseille de faire comme ça
-$page = new HTMLPage("Artistes - Lowify");
-$page->addContent($html);
-echo $page->render();
 
 // -- version compacte avec bootstrap et navigation transition
 // /!\ A SUPPRIMER SI VOUS N'UTILISEZ PAS BOOTSTRAP
