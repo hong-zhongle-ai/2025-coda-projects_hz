@@ -1,0 +1,217 @@
+
+body {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+    font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Header Section avec Gradient */
+.artist-header {
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    background: linear-gradient(to bottom, #444444, #121212);
+    height: 350px;
+    margin-bottom: 2rem;
+}
+
+.artist-header img {
+    width: 232px;
+    height: 232px;
+    box-shadow: 0 4px 60px rgba(0,0,0,.5);
+    border-radius: 50%; /* Cercle pour l'artiste */
+    object-fit: cover;
+    margin-right: 24px;
+}
+
+.artist-info h1 {
+    font-size: 96px;
+    font-weight: 900;
+    margin-bottom: 0;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.artist-info p {
+    font-size: 16px;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* Boutons d'action */
+.action-bar {
+    padding: 0 20px 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-play {
+    background-color: #1db954;
+    color: #000;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    transition: transform 0.1s ease, background-color 0.1s;
+    border: none;
+}
+.btn-play:hover { transform: scale(1.05); background-color: #1ed760; }
+
+.btn-follow {
+    background-color: transparent;
+    border: 1px solid #727272;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 15px;
+    border-radius: 4px;
+    transition: all 0.1s;
+}
+.btn-follow:hover { border-color: #fff; }
+
+/* Liste des Chansons (Table style) */
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.song-list {
+    margin-bottom: 40px;
+}
+
+.song-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.song-row:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.song-index {
+    width: 20px;
+    color: #b3b3b3;
+    font-size: 16px;
+    margin-right: 16px;
+    text-align: right;
+}
+
+.song-info {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.song-info img {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+    border-radius: 2px;
+}
+
+.song-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.song-note {
+    color: #b3b3b3;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Albums Grid */
+.spotify-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+}
+
+.spotify-card {
+    background-color: #181818;
+    padding: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.spotify-card:hover {
+    background-color: #282828;
+}
+
+.card-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+/* Bio Section */
+.bio-section {
+    margin-top: 40px;
+    color: #b3b3b3;
+    max-width: 800px;
+    line-height: 1.6;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+</style>
+  CSS;
