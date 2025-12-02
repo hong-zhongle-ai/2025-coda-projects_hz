@@ -168,19 +168,14 @@ HTML;
     </div>
 HTML;
 }
-
-
-$customStyles = <<<CSS
+//HTML final
+$mainHtml = <<<HTML
 <style>
     .hover-scale { transition: transform 0.2s; }
     .hover-scale:hover { transform: scale(1.05); }
     .hover-bg { transition: background-color 0.2s; padding: 8px; border-radius: 6px; }
     .hover-bg:hover { background-color: #2a2a2a !important; }
 </style>
-CSS;
-
-$mainHtml = <<<HTML
-$customStyles
 <div class="container bg-dark text-white p-4" style="min-height: 100vh;">
     
     <!-- Header Recherche -->

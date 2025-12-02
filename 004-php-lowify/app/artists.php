@@ -2,6 +2,7 @@
 require_once 'inc/page.inc.php';
 require_once 'inc/database.inc.php';
 
+// accede a la database
 try {
     $db = new DatabaseManager(
         dsn: 'mysql:host=mysql;dbname=lowify;charset=utf8mb4',
@@ -12,7 +13,7 @@ try {
     echo "Erreur connexion BDD : " . $ex->getMessage();
     exit;
 }
-
+//recup artist dans la db
 $allArtists = [];
 try {
     $allArtists = $db->executeQuery("SELECT id, name, cover FROM artist");
@@ -20,7 +21,7 @@ try {
     echo "Erreur requête artistes : " . $ex->getMessage();
     exit;
 }
-
+//recup album dans la db
 $allAlbums = [];
 try {
     $allAlbums = $db->executeQuery("
@@ -34,7 +35,7 @@ try {
     exit;
 }
 
-
+// HTML pour artist
 $artistsAsHTML = "";
 $iterator = 0;
 
@@ -63,7 +64,7 @@ HTML;
     }
     $artistsAsHTML .= '</div>'; // Fermeture row
 }
-
+// HTML pour album
 $albumsAsHTML = "";
 
 if (count($allAlbums) > 0) {
@@ -91,8 +92,8 @@ HTML;
     }
     $albumsAsHTML .= '</div>';
 }
-
-$customStyles = <<<CSS
+// HTML final
+$html = <<<HTML
 <style>
     .hover-scale { transition: transform 0.2s; }
     .hover-scale:hover { transform: scale(1.05); border-color: white !important; }
@@ -100,10 +101,6 @@ $customStyles = <<<CSS
     .hover-bg { transition: background-color 0.2s; padding: 10px; border-radius: 8px; }
     .hover-bg:hover { background-color: #282828 !important; }
 </style>
-CSS;
-
-$html = <<<HTML
-$customStyles
 <div class="container bg-dark text-white p-4" style="min-height: 100vh;">
     
     <!-- Navigation -->

@@ -1,7 +1,7 @@
 <?php
 require_once 'inc/page.inc.php';
 require_once 'inc/database.inc.php';
-
+// change les 1000 en 1K,les 1000000 en 1M et les 1000000000 en 1B
 function formatNumber($aMonthly_listeners) {
     if ($aMonthly_listeners >= 1000000000) {
         return round($aMonthly_listeners / 1000000000, 1) . 'B';
@@ -20,13 +20,10 @@ function formatDuration(int $seconds): string {
     return sprintf('%02d:%02d', $minutes, $seconds);
 }
 
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: index.php");
-    exit;
-}
 
+// recup les info grace au $_GET
 $artistId = (int) $_GET['id'];
-
+// connection a la db grace au username et password
 try {
     $db = new DatabaseManager(
         dsn: 'mysql:host=mysql;dbname=lowify;charset=utf8mb4',
@@ -37,22 +34,23 @@ try {
     echo "Erreur connexion BDD : " . $ex->getMessage();
     exit;
 }
-
+// recup artist dans la db
 try {
     $sql = "SELECT id, name, cover FROM artist WHERE id = $artistId";
     $results = $db->executeQuery($sql);
 
-    if (count($results) == 0) {
-        echo "Artiste introuvable.";
+    if (empty($results)) {
+        header("Location: display_error.php");
         exit;
     }
+
     $artist = $results[0];
 } catch (PDOException $ex) {
     echo "Erreur requête artiste : " . $ex->getMessage();
     exit;
 }
 
-
+//recup album dans la db
 $albumHtml = "";
 try {
     $sqlalbum = "SELECT id, name, cover
@@ -90,7 +88,7 @@ HTML;
     exit;
 }
 
-
+//recup des sons dans le db
 $songsHtml = "";
 try {
     $sqlSongs = "SELECT s.id, s.name, s.note, a.cover, s.duration
@@ -139,6 +137,7 @@ HTML;
     echo "Erreur requête songs : " . $ex->getMessage();
     exit;
 }
+//recup la bio et les ecoutes mesuel dans artist dans la db. PS:je pense que c possible de directement recup ces info dans le try artist mais je n;ai pas reussi
 $bioHtml = "";
 try {
     $sqlbio = "SELECT biography,monthly_listeners
@@ -179,7 +178,7 @@ HTML;
     echo "Erreur requête albums : " . $ex->getMessage();
     exit;
 }
-// 6. AFFICHAGE
+// 6. AFFICHAGE HTML
 $name = htmlspecialchars($artist['name']);
 $cover = htmlspecialchars($artist['cover']);
 

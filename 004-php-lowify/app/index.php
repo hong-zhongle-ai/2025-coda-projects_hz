@@ -2,7 +2,7 @@
 // 1. IMPORTATIONS
 require_once 'inc/page.inc.php';
 require_once 'inc/database.inc.php';
-
+// accede a la database
 try {
     $db = new DatabaseManager(
         dsn: 'mysql:host=mysql;dbname=lowify;charset=utf8mb4',
@@ -13,6 +13,8 @@ try {
     echo "Erreur connexion BDD : " . $ex->getMessage();
     exit;
 }
+
+// recup les artist trier par le plus d'ecoutes du plus grand u plus petit et album du plus recent au plus vieux dans la db
 $topArtists = [];
 try {
     $topArtists = $db->executeQuery("
@@ -37,7 +39,7 @@ try {
 } catch (PDOException $ex) {
     echo "Erreur Top Sorties : " . $ex->getMessage();
 }
-
+// recup les meilleure sons trier par la note du plus grand au plus petit avec une limite de 5
 $topRatedAlbums = [];
 try {
     $topRatedAlbums = $db->executeQuery("
@@ -55,7 +57,7 @@ try {
 } catch (PDOException $ex) {
     echo "Erreur Top Rated : " . $ex->getMessage();
 }
-
+//top des artists
 $htmlTrending = "";
 if (count($topArtists) > 0) {
     $htmlTrending .= '<div class="row flex-nowrap overflow-auto pb-3 mb-4 section-scroll">';
@@ -82,7 +84,7 @@ HTML;
     }
     $htmlTrending .= '</div>';
 }
-
+// les album les plus recent
 $htmlReleases = "";
 if (count($recentAlbums) > 0) {
     $htmlReleases .= '<div class="row flex-nowrap overflow-auto pb-3 mb-4 section-scroll">';
@@ -108,7 +110,7 @@ HTML;
     }
     $htmlReleases .= '</div>';
 }
-
+// les mieux noter
 $htmlTopRated = "";
 if (count($topRatedAlbums) > 0) {
     $htmlTopRated .= '<div class="row flex-nowrap overflow-auto pb-3 mb-4 section-scroll">';
@@ -136,8 +138,8 @@ HTML;
     $htmlTopRated .= '</div>';
 }
 
-// 5. CSS & STRUCTURE FINALE
-$customCSS = <<<CSS
+// HTML final
+$html = <<<HTML
 <style>
     .hover-scale { transition: transform 0.2s; }
     .hover-scale:hover { transform: scale(1.05); border-color: white !important; }
@@ -150,12 +152,6 @@ $customCSS = <<<CSS
     .section-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
     .section-scroll::-webkit-scrollbar-thumb:hover { background: #555; }
 </style>
-CSS;
-
-$html = <<<HTML
-$customCSS
-
-<!-- Hero Section -->
 <div class="p-5 mb-4 bg-dark rounded-3" style="background: linear-gradient(45deg, #1db954, #191414);">
     <div class="container-fluid py-3 text-white">
         <h1 class="display-5 fw-bold">Bienvenue sur Lowify</h1>

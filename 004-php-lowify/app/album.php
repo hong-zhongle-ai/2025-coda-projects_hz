@@ -8,12 +8,12 @@ function formatDuration(int $seconds): string {
     $seconds = $seconds % 60;
     return sprintf('%02d:%02d', $minutes, $seconds);
 }
-
-if (!isset($_GET['id']) || empty($_GET['id'])) {
+// au cas ou il n'y a rien
+if (empty($_GET['id'])) {
     header("Location: display_error.php?message=Identifiant d'album manquant");
     exit;
 }
-
+// // recup les info grace au $_GET
 $albumId = (int) $_GET['id'];
 
 try {
@@ -26,7 +26,7 @@ try {
     header("Location: display_error.php?message=Erreur connexion BDD");
     exit;
 }
-
+// recup album dans la db
 try {
     $sql = "SELECT id, name, cover, release_date, artist_id FROM album WHERE id = $albumId";
     $results = $db->executeQuery($sql);
@@ -40,7 +40,7 @@ try {
     header("Location: display_error.php?message=Erreur requête album");
     exit;
 }
-
+// recup artist dans la db
 try {
     $artistId = $album['artist_id'];
     $sqlArtist = "SELECT name FROM artist WHERE id = $artistId";
@@ -49,7 +49,7 @@ try {
 } catch (PDOException $ex) {
     $artistName = "Erreur récupération artiste";
 }
-
+// recup sons dans le db
 $songsHtml = "";
 try {
 
@@ -98,7 +98,7 @@ HTML;
     header("Location: display_error.php?message=Erreur requête chansons");
     exit;
 }
-
+//HTML final
 $albumName = htmlspecialchars($album['name']);
 $albumCover = htmlspecialchars($album['cover']);
 $releaseYear = substr($album['release_date'], 0, 4);
